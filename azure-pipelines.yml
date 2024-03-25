@@ -1,0 +1,68 @@
+trigger:
+- main
+
+pool:
+  vmImage: windows-latest
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Install .NET Core sdk'
+  inputs:
+    packageType: sdk
+    version: 3.1.x
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
+- task: DotNetCoreCLI@2
+  displayName: 'Restore dependencies'
+  inputs:
+    command: restore
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build the project'
+  inputs:
+    command: build
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Test the project'
+  inputs:
+    command: test
+    projects: '**/*Test*.csproj'
+
+- script: |
+    echo Console.WriteLine("Database access has already been done on April 14, 2023 by Khushboo Koshti"); >> C:\Users\KHUSHBOO KOSHTI\Downloads\dotnet-sqldb-tutorial-master\dotnet-sqldb-tutorial-master.cs
+  displayName: 'Add database access message'
+
+- script: |
+    git config --global user.email "kkoshti1@my.centennialcollege.ca"
+    git config --global user.name "Khushboo Koshti"
+    git add .
+    git commit -m "Added database access feature"
+  displayName: 'Commit changes'
+
+- script: |
+    git push origin master
+  displayName: 'Push changes'
+
+
+
+# # Starter pipeline
+# # Start with a minimal pipeline that you can customize to build and deploy your code.
+# # Add steps that build, run tests, deploy, and more:
+# # https://aka.ms/yaml
+
+# trigger:
+# - main
+
+# pool:
+#   vmImage: ubuntu-latest
+
+# steps:
+# - script: echo Hello, world!
+#   displayName: 'Run a one-line script'
+
+# - script: |
+#     echo Add other tasks to build, test, and deploy your project.
+#     echo See https://aka.ms/yaml
+#   displayName: 'Run a multi-line script'
