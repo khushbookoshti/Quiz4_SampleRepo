@@ -18,6 +18,7 @@ namespace DotNetAppSqlDb.Controllers
         public ActionResult Index()
         {            
             Trace.WriteLine("GET /Todos/Index");
+            Console.WriteLine("Database access has already been done on April 14, 2023 by Khushboo Koshti");
             return View(db.Todoes.ToList());
         }
 
